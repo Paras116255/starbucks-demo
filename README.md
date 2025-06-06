@@ -93,7 +93,7 @@ pipeline {
         }
         stage ("Git checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/yeshwanthlm/starbucks.git'
+                git branch: 'main', url: 'https://github.com/Paras116255/starbucks-demo.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -136,8 +136,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker') {
-                        sh "docker tag starbucks amonkincloud/starbucks:latest "
-                        sh "docker push amonkincloud/starbucks:latest "
+                        sh "docker tag starbucks paras1112/starbucks:latest "
+                        sh "docker push paras1112/starbucks:latest "
                     }
                 }
             }
@@ -146,16 +146,16 @@ pipeline {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview amonkincloud/starbucks:latest'
-                       sh 'docker-scout cves amonkincloud/starbucks:latest'
-                       sh 'docker-scout recommendations amonkincloud/starbucks:latest'
+                       sh 'docker-scout quickview paras1112/starbucks:latest'
+                       sh 'docker-scout cves paras1112/starbucks:latest'
+                       sh 'docker-scout recommendations paras1112/starbucks:latest'
                    }
                 }
             }
         }
         stage ("Deploy to Conatiner") {
             steps {
-                sh 'docker run -d --name starbucks -p 3000:3000 amonkincloud/starbucks:latest'
+                sh 'docker run -d --name starbucks -p 3000:3000 paras1112/starbucks:latest'
             }
         }
     }
@@ -178,7 +178,7 @@ pipeline {
                 </body>
                 </html>
             """,
-            to: 'provide_your_Email_id_here',
+            to: 'paraskumar116255@gmail.com',
             mimeType: 'text/html',
             attachmentsPattern: 'trivy.txt'
         }
